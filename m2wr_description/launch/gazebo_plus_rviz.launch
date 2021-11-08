@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find m2wr_description)/launch/spawn.launch">
+        <arg name="load_robot_description" value="false"/>
+    </include>
+    <include file="$(find m2wr_description)/launch/rviz.launch"/>
+
+</launch>

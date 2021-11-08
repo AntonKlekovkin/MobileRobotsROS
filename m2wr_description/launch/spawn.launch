@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="load_robot_description" default="true"/>
+
+    <group if="$(arg load_robot_description)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find m2wr_description)/urdf/m2wr.urdf.xacro'" />
+    </group>
+
+    <!-- 
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="worlds/empty.world"/>
+      <arg name="gui" value="true"/>
+      <arg name="paused" value="false"/>
+    </include> 
+    -->
+    
+    <node name="m2wr_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model m2wr" />
+
+</launch>
