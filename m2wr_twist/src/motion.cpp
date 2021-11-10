@@ -44,16 +44,17 @@ void CalculateParametrizationFunction(int length, float * arr)
     const float a1=23.55, b1=0.2186, c1=1.579, a2=23.25, b2=0.2487, c2=4.755, 
         a3=0.1469, b3=1.11, c3=4.841, a4=0.1867, b4=3.519, c4=-1.52;
     
-    //float endT = PI/2;
-    float endT = 8;
-    //float endT = 2*PI;
+    //float endT = PI/2;    // for sin^2
+    float endT = 8;         // for sum of sin
+    //float endT = 2*PI;    // for linear
 
     for(i = 0; i < length; i++)
     {
         float s = ((float)i/(float)length)*endT;
-        //arr[i] = sin(s)*sin(s)*2*PI;
-        arr[i] = a1*sin(b1*s+c1) + a2*sin(b2*s+c2) + a3*sin(b3*s+c3) + a4*sin(b4*s+c4);
-        //arr[i] = s;
+        //arr[i] = sin(s)*sin(s)*2*PI;      // sin^2
+        arr[i] = a1*sin(b1*s+c1) + a2*sin(b2*s+c2) + a3*sin(b3*s+c3) + a4*sin(b4*s+c4); // sum of sin
+        //arr[i] = s;                       // linear
+        
         ROS_INFO("i=%d, t=%f", i, arr[i]);    
     }    
 }
@@ -64,9 +65,11 @@ void CalculatePointsOfTrajectory(int length, float * x, float * y, float * t)
     int i =0;  
     for(i=0; i < length; i++)
     {
+        // trajectory "infinity"
         x[i] = sin(t[i]+(PI/2))*kTr;
         y[i] = sin(2*t[i])*kTr;
 
+        //trajectory circle
         //x[i] = sin(t[i])*kTr;
         //y[i] = cos(t[i])*kTr;
 
@@ -267,9 +270,6 @@ int main(int argc, char* argv[])
     k2 = maxAngVelocityReal/maxAngVelocity * coeffSafety;
 
     k = GetMin(2, new float[2] {k1, k2});
-    //if(k1<k2){k=k1;}
-    //else {k=k2;}
-
     k = Range(k, 0.1, coeffSafety);
     
     ROS_INFO("k=%f", k);
