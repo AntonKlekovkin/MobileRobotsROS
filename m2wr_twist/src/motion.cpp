@@ -7,6 +7,7 @@
 
 #define PI 3.1415926
 
+
 ros::Publisher pub;
 ros::Publisher pubTheorTrajectory;
 ros::Publisher pubTheorLinVel;
